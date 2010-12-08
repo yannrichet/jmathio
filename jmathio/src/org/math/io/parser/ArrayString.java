@@ -128,7 +128,11 @@ public class ArrayString {
             String[] cols = rows[i].split(columnDelimiter);
             array[i] = new double[cols.length];
             for (int j = 0; j < cols.length; j++) {
-                array[i][j] = Double.parseDouble(cols[j]);
+                try {
+                    array[i][j] = Double.parseDouble(cols[j]);
+                } catch (NumberFormatException e) {
+                    array[i][j] = Double.NaN;
+                }
             }
         }
 
@@ -148,7 +152,11 @@ public class ArrayString {
             String[] cols = rows[i].split(columnDelimiter);
             array[i] = new int[cols.length];
             for (int j = 0; j < cols.length; j++) {
-                array[i][j] = Integer.parseInt(cols[j]);
+                try {
+                    array[i][j] = Integer.parseInt(cols[j]);
+                } catch (NumberFormatException e) {
+                    array[i][j] = Integer.MAX_VALUE;
+                }
             }
         }
 
