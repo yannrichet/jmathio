@@ -2,6 +2,8 @@ package org.math.io.files;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.math.io.parser.*;
 
 /**
@@ -29,11 +31,11 @@ public class ASCIIFile extends DataFile {
         ASCIIFile af = new ASCIIFile(f);
         return af.readLine(i);
     }
-    
+
     public static double[] readDouble1DArray(File f) {
         return ArrayString.readString1DDouble(ASCIIFile.read(f));
     }
-    
+
     public static double[][] readDoubleArray(File f) {
         return ArrayString.readStringDouble(ASCIIFile.read(f));
     }
@@ -41,29 +43,30 @@ public class ASCIIFile extends DataFile {
     public static int[] readInt1DArray(File f) {
         return ArrayString.readString1DInt(ASCIIFile.read(f));
     }
+
     public static int[][] readIntArray(File f) {
         return ArrayString.readStringInt(ASCIIFile.read(f));
     }
-    
+
     public static void write(File f, String t) {
         ASCIIFile af = new ASCIIFile(f);
         af.write(t, false);
     }
-    
+
     public static void writeDoubleArray(File f, double[] array) {
-        write(f,ArrayString.printDoubleArray(array));
+        write(f, ArrayString.printDoubleArray(array));
     }
-    
+
     public static void writeDoubleArray(File f, double[][] array) {
-        write(f,ArrayString.printDoubleArray(array));
+        write(f, ArrayString.printDoubleArray(array));
     }
-    
+
     public static void writeIntArray(File f, int[] array) {
-        write(f,ArrayString.printIntArray(array));
+        write(f, ArrayString.printIntArray(array));
     }
-    
+
     public static void writeIntArray(File f, int[][] array) {
-        write(f,ArrayString.printIntArray(array));
+        write(f, ArrayString.printIntArray(array));
     }
 
     public static void append(File f, String t) {
@@ -78,9 +81,10 @@ public class ASCIIFile extends DataFile {
      */
     public String read() {
         StringBuffer text = new StringBuffer((int) file.length());
+        BufferedReader b = null;
         try {
             FileReader fr = new FileReader(file);
-            BufferedReader b = new BufferedReader(fr);
+            b = new BufferedReader(fr);
             boolean eof = false;
             String line;
             String ret = "\n";
@@ -93,10 +97,15 @@ public class ASCIIFile extends DataFile {
                     text.append(ret);
                 }
             }
-            b.close();
         } catch (IOException e) {
             throw new IllegalArgumentException("File " + file.getName()
                     + " is unreadable : " + e.toString());
+        } finally {
+            try {
+                b.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
         return text.toString();
     }
@@ -108,10 +117,10 @@ public class ASCIIFile extends DataFile {
      */
     public String[] readLines() {
         Vector<String> linesVector = new Vector<String>();
-        ;
+        BufferedReader b = null;
         try {
             FileReader fr = new FileReader(file);
-            BufferedReader b = new BufferedReader(fr);
+            b = new BufferedReader(fr);
             boolean eof = false;
             while (!eof) {
                 String line = b.readLine();
@@ -121,11 +130,19 @@ public class ASCIIFile extends DataFile {
                     linesVector.add(line);
                 }
             }
-            b.close();
+
         } catch (IOException e) {
             throw new IllegalArgumentException("File " + file.getName()
                     + " is unreadable : " + e.toString());
+        } finally {
+            try {
+                b.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
+
+
         String[] lines = new String[linesVector.size()];
         for (int i = 0; i < lines.length; i++) {
             lines[i] = (String) (linesVector.get(i));
@@ -142,9 +159,10 @@ public class ASCIIFile extends DataFile {
      */
     public String readLine(int i) {
         String line = new String("");
+        BufferedReader b = null;
         try {
             FileReader fr = new FileReader(file);
-            BufferedReader b = new BufferedReader(fr);
+            b = new BufferedReader(fr);
             boolean eof = false;
             for (int j = 0; j < i; j++) {
                 if (eof) {
@@ -152,17 +170,24 @@ public class ASCIIFile extends DataFile {
                             + " is not found in the file " + file.getName()
                             + ".");
                 }
-                line=b.readLine();
+                line = b.readLine();
                 if (line == null) {
                     eof = true;
                 }
             }
             line = b.readLine();
-            b.close();
+
         } catch (IOException e) {
             throw new IllegalArgumentException("File " + file.getName()
                     + " is unreadable : " + e.toString());
+        } finally {
+            try {
+                b.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
+
         return line;
     }
 
@@ -179,36 +204,54 @@ public class ASCIIFile extends DataFile {
             System.out.println("Warning : the file " + file.getName()
                     + " already exists !");
         }
+        FileWriter fw = null;
+        BufferedWriter bw = null;
         try {
-            FileWriter fw = new FileWriter(file, append);
-            BufferedWriter bw = new BufferedWriter(fw);
+            fw = new FileWriter(file, append);
+            bw = new BufferedWriter(fw);
             bw.write(text);
-            bw.close();
+
         } catch (IOException e) {
             throw new IllegalArgumentException("File " + file.getName()
                     + " is unwritable : " + e.toString());
+        } finally {
+            try {
+                bw.close();
+                fw.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
     public static void concatenate(File f1, File f2) {
+
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
+        FileOutputStream fos = null;
+        BufferedOutputStream bos = null;
         try {
-            FileInputStream fis = new FileInputStream(f2);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-            FileOutputStream fos = new FileOutputStream(f1, true);
-            BufferedOutputStream bos = new BufferedOutputStream(fos);
-
+            fis = new FileInputStream(f2);
+            bis = new BufferedInputStream(fis);
+            fos = new FileOutputStream(f1, true);
+            bos = new BufferedOutputStream(fos);
             int c;
-
             while ((c = bis.read()) != -1) {
                 bos.write(c);
             }
-
-            bis.close();
-            bos.close();
         } catch (IOException e) {
             System.err.println("Concatenate: " + e);
-        }
+        } finally {
+            try {
+                bis.close();
+                fis.close();
+                bos.close();
+                fos.close();
 
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -223,7 +266,6 @@ public class ASCIIFile extends DataFile {
         System.out.println(ASCIIFile.readLine(f, 0));
         System.out.println(ASCIIFile.readLine(f, lines.length - 1));
 
-        ASCIIFile.append(new File("write.txt"), Calendar.getInstance()
-                .getTime().toString());
+        ASCIIFile.append(new File("write.txt"), Calendar.getInstance().getTime().toString());
     }
 }
