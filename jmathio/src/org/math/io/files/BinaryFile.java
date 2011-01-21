@@ -15,15 +15,11 @@ import org.math.io.stream.BinaryOutputStream;
  * 
  * @author Yann RICHET
  */
-
 public class BinaryFile {
 
     public static String LITTLE_ENDIAN = "LITTLE_ENDIAN";
-
     public static String BIG_ENDIAN = "BIG_ENDIAN";
-
     private boolean bigEndian;
-
     private File file;
 
     public BinaryFile(File f, String endian) {
@@ -40,8 +36,8 @@ public class BinaryFile {
         } else {
             throw new IllegalArgumentException(
                     "The Endian type : "
-                            + endian
-                            + "is unknown. You must specify LITTLE_ENDIAN or BIG_ENDIAN.");
+                    + endian
+                    + "is unknown. You must specify LITTLE_ENDIAN or BIG_ENDIAN.");
         }
         return be;
     }
@@ -93,7 +89,6 @@ public class BinaryFile {
 
     /**
      * Read a binary File
-     * 
      * @return int[]
      */
     public int[] readIntArray() {
@@ -113,7 +108,6 @@ public class BinaryFile {
 
     /**
      * Read a binary File
-     * 
      * @return float[]
      */
     public float[] readFloatArray() {
@@ -133,7 +127,6 @@ public class BinaryFile {
 
     /**
      * Read a binary File
-     * 
      * @return double[]
      */
     public double[] readDoubleArray() {
@@ -153,7 +146,6 @@ public class BinaryFile {
 
     /**
      * Read a binary File
-     * 
      * @return byte[]
      */
     public byte[] readByteArray() {
@@ -174,12 +166,9 @@ public class BinaryFile {
     /**
      * Write an int array in a binary File
      * 
-     * @param array
-     *            int[]
-     * @param append
-     *            boolean
+     * @param array int[]
+     * @param append boolean
      */
-
     public void writeIntArray(int[] array, boolean append) {
         if (file.exists()) {
             System.out.println("Warning : the file " + file.getName()
@@ -203,12 +192,9 @@ public class BinaryFile {
     /**
      * Write a float array in a binary File
      * 
-     * @param array
-     *            float[]
-     * @param append
-     *            boolean
+     * @param array float[]
+     * @param append boolean
      */
-
     public void writeFloatArray(float[] array, boolean append) {
         if (file.exists()) {
             System.out.println("Warning : the file " + file.getName()
@@ -227,17 +213,16 @@ public class BinaryFile {
         BinaryOutputStream bs = new BinaryOutputStream(bos, bigEndian);
 
         bs.writeFloatArray(array, append);
+
+        //TODO add try/catch/finally !!!
     }
 
     /**
      * Write a double array in a binary File
      * 
-     * @param array
-     *            float[]
-     * @param append
-     *            boolean
+     * @param array float[]
+     * @param append boolean
      */
-
     public void writeDoubleArray(double[] array, boolean append) {
         if (file.exists()) {
             System.out.println("Warning : the file " + file.getName()
@@ -260,13 +245,10 @@ public class BinaryFile {
 
     /**
      * Write a text in a binary File
-     * 
-     * @param bytes
-     *            byte[]
-     * @param append
-     *            boolean
-     */
 
+     * @param bytes  byte[]
+     * @param append boolean
+     */
     public void writeByteArray(byte[] bytes, boolean append) {
         if (file.exists()) {
             System.out.println("Warning : the file " + file.getName()
@@ -289,7 +271,6 @@ public class BinaryFile {
 
     /**
      * Read a binary File
-     * 
      * @return int
      */
     public int readInt() {
@@ -298,7 +279,6 @@ public class BinaryFile {
 
     /**
      * Read a binary File
-     * 
      * @return float
      */
     public float readFloat() {
@@ -307,7 +287,6 @@ public class BinaryFile {
 
     /**
      * Read a binary File
-     * 
      * @return double
      */
     public double readDouble() {
@@ -316,7 +295,6 @@ public class BinaryFile {
 
     /**
      * Read a binary File
-     * 
      * @return byte
      */
     public byte readByte() {
@@ -325,54 +303,39 @@ public class BinaryFile {
 
     /**
      * Write an int in a binary File
-     * 
-     * @param i
-     *            int
-     * @param append
-     *            boolean
+     * @param i int
+     * @param append boolean
      */
-
     public void writeInt(int i, boolean append) {
-        writeIntArray(new int[] { i }, append);
+        writeIntArray(new int[]{i}, append);
     }
 
     /**
      * Write a float in a binary File
-     * 
-     * @param f
-     *            float
-     * @param append
-     *            boolean
+     * @param f float
+     * @param append boolean
      */
-
     public void writeFloat(float f, boolean append) {
-        writeFloatArray(new float[] { f }, append);
+        writeFloatArray(new float[]{f}, append);
     }
 
     /**
      * Write a double in a binary File
-     * 
-     * @param d
-     *            double
-     * @param append
-     *            boolean
+     * @param d double
+     * @param append boolean
      */
-
     public void writeDouble(double d, boolean append) {
-        writeDoubleArray(new double[] { d }, append);
+        writeDoubleArray(new double[]{d}, append);
     }
 
     /**
      * Write a text in a binary File
      * 
-     * @param b
-     *            byte
-     * @param append
-     *            boolean
+     * @param b byte
+     * @param append boolean
      */
-
     public void writeByte(byte b, boolean append) {
-        writeByteArray(new byte[] { b }, append);
+        writeByteArray(new byte[]{b}, append);
     }
 
     public static void main(String[] args) {
@@ -385,17 +348,19 @@ public class BinaryFile {
 
             for (int i = 1; i < args.length; i++) {
                 if (args[i].equals("-endian")) {
-                    if (args[i + 1].equals("little"))
+                    if (args[i + 1].equals("little")) {
                         endian = LITTLE_ENDIAN;
+                    }
                     i++;
                 } else if (args[i].equals("-data")) {
                     data = args[i + 1];
                     i++;
                 } else {
                     file = new File(args[i]);
-                    if (!file.exists())
+                    if (!file.exists()) {
                         System.out.println("File " + file
                                 + " doesn't exists.\n" + man);
+                    }
                     i++;
                 }
             }
@@ -415,8 +380,9 @@ public class BinaryFile {
                 for (int j = 0; j < d.length; j++) {
                     System.out.println(d[j] + "");
                 }
-            } else
+            } else {
                 System.out.println(man);
+            }
 
         } else {
             System.out.println("Option not implemented.");
