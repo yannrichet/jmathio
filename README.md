@@ -22,7 +22,7 @@ import static org.math.io.parser.ArrayString.*;
 
 Just put https://github.com/yannrichet/jmathio/blob/master/dist/jmathio.jar in your java classpath 
 
-Or include maven artifact:
+Or include maven dependency:
 ```xml
 <dependencies>
 ...
