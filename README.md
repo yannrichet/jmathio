@@ -20,4 +20,16 @@ import static org.math.io.parser.ArrayString.*;
 ```
 ## Use it ##
 
-Just put jmathio.jar in your java classpath 
+Just put https://github.com/yannrichet/jmathio/blob/master/dist/lib/jmathio-1.0-SNAPSHOT.jar in your java classpath 
+Or include maven artifact:
+```xml
+<dependencies>
+...
+		<dependency>
+			<groupId>com.github.yannrichet</groupId>
+			<artifactId>jmathio</artifactId>
+			<version>1.0</version>
+		</dependency>
+...
+</dependencies>
+```
