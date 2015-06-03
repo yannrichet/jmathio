@@ -21,6 +21,7 @@ import static org.math.io.parser.ArrayString.*;
 ## Use it ##
 
 Just put https://github.com/yannrichet/jmathio/blob/master/dist/lib/jmathio-1.0-SNAPSHOT.jar in your java classpath 
+
 Or include maven artifact:
 ```xml
 <dependencies>
