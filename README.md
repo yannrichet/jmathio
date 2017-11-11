@@ -1,4 +1,6 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.yannrichet/JMathIO/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.yannrichet/JMathIO)
+[![Build Status](https://travis-ci.org/yannrichet/jmathio.png)](https://travis-ci.org/yannrichet/jmathio)
+[![codecov](https://codecov.io/gh/yannrichet/jmathio/branch/master/graph/badge.svg)](https://codecov.io/gh/yannrichet/jmathio)
 
 # JMathIO: easy to use read/write classes for double arrays 
 
