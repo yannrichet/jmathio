@@ -1,4 +1,6 @@
-# JMathIO: easy to use read/write classes for double arrays #
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.yannrichet/JMathIO/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.yannrichet/JMathIO)
+
+# JMathIO: easy to use read/write classes for double arrays 
 
 JMathIO allows to create, read, write, append your datas in:
 
